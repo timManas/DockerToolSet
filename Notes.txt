@@ -1,7 +1,33 @@
-# DockerToolSet
+Docker ! 
 
+1. Why do we use Docker ?
+> To install pr easier to installation of applications (DB, MQ ..etc) easier
+> We do not have to worry about dependencies
 
-utput you are currently reading.
+2. What is an image ? 
+Single file with all the reps and config requrired to run a program 
+es. Redis, MongoDB
+
+3. What is a container ? 
+- Instance of an image (i.e a Running program)
+
+4. What is the function of the Docker Client ?
+- Issue commands to the Docker Server (i.e Docker Daemon)  which is responsible for 
+creating images, running containers, etc.
+- Users never control the Docker Server but we can issue commands to it via CLI
+
+5. How to start up Docker ?
+1. Do to applications
+2. Open App 
+3. Click on whale icon on top right
+4. Sign in
+5. Check version #
+
+6. What happens when you run 'docker run hello-world'
+ 1. The Docker client contacted the Docker daemon.
+ 2. Docker daemon pulled the "hello-world" image from the Docker Hub.
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
  4. The Docker daemon streamed that output to the Docker client, which sent it
     to your terminal.
 
@@ -51,18 +77,5 @@ or
 20. Containers DO NOT interact with other components unless instructed to do so. They are completely isolated to each other
 
 
-21. How to create our own Docker image ? 
-What you will need ?
-1. DockerFile: Configutation to define how our container should  behave
-2. Run command on Docker Client
-3. Docker Server executes command and takes docker file and executes them
-4. Image is Run
-
-22. Creating a Docker File
-1. Specify a base image
-2. Run some commands to install additional programs
-3. Specify a command to run on container setup
-
-23. 
 
 
