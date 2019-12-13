@@ -196,3 +196,67 @@ WORKDIR /usr/app
 
 43. In order to get dynamic rebuilding (Why ? Because we want changes to automatically update on the GUI)
 
+44. Two containers do NOT have automatic communication between each other. Both are isolated
+- We need to set up some network infrastructure
+
+45. Two options for 2 containers to communicate with each other
+1. Use Docker CLI's networking features
+2. Use Docker Compose
+
+46. Don't use the first option ...Use docker compose instead
+
+47. What is docker compose ? 
+- It is a separate CLI that's gets installed along with Docker
+- Used to start up multiple Docker containers
+- Automates some of the long-winded arguments that were passing to 'docker run'
+
+48. Docker composes uses YAML files 
+Ex. docker commands -> Docker-compose.yml -> Docker compose cli 
+
+49. Docker compose file example
+
+version: '3'
+services: 
+    redis-server:
+        image: 'redis'
+    node-app:
+        build: .
+        ports:
+            - "4001:8081"
+
+
+
+'services' are like container
+"build: . " - Refers to build current Docker file
+"image: 'redis'" - Refer to building redis from docker hub
+
+
+50. Docker compose comparison to docker lingo
+docker 			docker-compose
+docker run myImage	docker-compose up 
+
+docker build .		docker-compose up --build 
+docker run myImage
+
+51. How to Launch in background
+docker-compose up -d
+
+52. How to stop docker-compose containers
+docker-compose down
+
+53. If one of our components crash inside a container
+- You will need to set up code as per the docker restart policies as follows:
+"no" - Never attempt to restart this . container if it stops or crashes (Default behaviour)
+always - If the container stops for any reason always attempt to restart it 
+on-failure - Only restart if the container stops with an error code
+unless-stopped - Always restart unless we forcibly stop it
+
+54. Clean up your docker shit
+docker rmi $(docker images -q)
+docker system prune
+docker volume rm $(docker volume ls -f dangling=true -q)
+docker system df
+
+55. To get the ps of docker compose...use
+docker-compose ps
+** Needs to be run in a docker compose directory with a YAML file
