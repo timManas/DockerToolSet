@@ -63,6 +63,136 @@ What you will need ?
 2. Run some commands to install additional programs
 3. Specify a command to run on container setup
 
-23. 
+23. Created a docker image. Take a look at the redid-image folder:
+FROM: Specify the docker image we want to use as a base
+RUN: Execute some command while we are preparing our image 
+CMD: Specify what command should be used to start up a brand new container
+** Note there are ALOT OF them
 
+
+24. Note: 
+Writing a docker file == Being given a computer with no OS and told to install Chrome
+
+25. Why did we use alpine as a base image ? 
+-> They come with preinstalled set of program that are useful to me =)
+
+26. Why do we use docker build . ? 
+> Allows us give our docker file to the docker CLI
+
+27. Note ...You will STEPS 1/3, 2/3, 3/3
+> These are the commands outputs from our DockerFile !!!!! 
+
+28. When running these instructions, it will create temporary containers for building and downloading
+> With every instructions we take image and create a new container out of it  and take a snapshot as a new image
+
+29. How to add a Tag to an image ? 
+> dickerId / ProjectName : version
+ex. -t timmanas/redis:latest 
+docker build -t timmanas/redis:latest .
+
+30. How to execute a tagged docker image ?
+docker run timmanas/redis
+** if you don't put ":latest" - it will use latest image
+
+31. You use images to create containers 
+However we can also create a container which creates an image =) 
+
+32.  Reminder this is the format we are following:
+Template
+- Specify a base image
+- Run some commands to install additional program
+- Specify a command to run on container start up
+
+Redis
+- FROM alpine
+- Run apk add --update redis
+- CMD ["redis-server"]
+
+Node
+- FROM alpine
+- RUN npm install
+- CMD ["npm", "start"]
+
+
+33. Reminder that how to build the docker file is
+docker build .
+
+34. why do we see "nom: not found" ?? when running docker file ?
+- Because alpine is a very vanilla image
+- You need to do some additional fixes
+	1. You could find a new base image which has node already installed in it
+	2. You could use the base alpine image and install node on top of it 
+
+35. Alpine is a term in the docker works which is as small and compact as possible 
+
+
+36. Getting this error:
+Sending build context to Docker daemon  4.096kB
+Step 1/3 : FROM node:alpine
+ ---> 5f8b3338a759
+Step 2/3 : RUN npm install
+ ---> Running in 0d6975c09ffa
+npm WARN saveError ENOENT: no such file or directory, open '/package.json'
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN enoent ENOENT: no such file or directory, open '/package.json'
+npm WARN !invalid#2 No description
+npm WARN !invalid#2 No repository field.
+npm WARN !invalid#2 No README data
+npm WARN !invalid#2 No license field.
+
+up to date in 0.58s
+found 0 vulnerabilities
+
+Removing intermediate container 0d6975c09ffa
+ ---> a7b0d7e5fb84
+Step 3/3 : CMD ["npm", "start"]
+ ---> Running in ac6ac5232f3b
+Removing intermediate container ac6ac5232f3b
+ ---> 8e4f9c2b93c4
+Successfully built 8e4f9c2b93c4
+
+
+This is because the package.json is not part of the segmented hard drive on the container. None of the files in the folder "SimpleWeb" are not part of the container initialization. You can specify this issue though
+- Add this line to resolve issue.
+cp <Path to folder to copy from> <Place to  copy stuff to inside>
+
+ex. COPY ./ ./
+Hence the instructions should now be 
+# Specify a base image
+# FROM alpine
+FROM node:alpine
+
+# Install some dependencies
+COPY ./ ./
+RUN npm install
+
+# Default command
+CMD ["npm", "start"]
+
+37. How to execute the NodeDocker File ?
+docker build -t timmanas/simpleweb . 
+docker run timmanas/simpleweb
+
+38. You might to do some Port mapping even if you start up Node + Docker 
+Why ? Because Port 8080 is located INSIDE the container. You will need to access it. Hence you will need to do some port mapping
+** this only needs to happen for incoming requests but outside an be request an be made automatically by docker containers
+
+
+39. Port forwarding is a run time constraint 
+Syntax is:
+docker run -p 8080:8080 <imageId>
+ex docker build -t timmanas/simpleweb . 
+
+40. How to access the container 'Node Docker(SimpleWeb)'
+docker run -it timmanas/simpleweb sh
+
+41. You don't want to overtire some files on the container when copying
+Use this command
+WORKDIR /usr/app
+
+42. How to run a shell while a container is running ?
+- docker ps  ... to get the docker container id
+- docker exec -it containerid sh
+
+43. In order to get dynamic rebuilding (Why ? Because we want changes to automatically update on the GUI)
 

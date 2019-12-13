@@ -1,3 +1,33 @@
 Execute by running:
 docker build .
 
+Then Run by using
+docker run dockerImageId (You get this after the step above)
+
+
+
+
+
+24. Note: 
+Writing a docker file == Being given a computer with no OS and told to install Chrome
+
+25. Why did we use alpine as a base image ? 
+-> They come with preinstalled set of program that are useful to me =)
+
+26. Why do we use docker build . ? 
+> Allows us give our docker file to the docker CLI
+
+27. Note ...You will STEPS 1/3, 2/3, 3/3
+> These are the commands outputs from our DockerFile !!!!! 
+
+28. When running these instructions, it will create temporary containers for building and downloading
+> With every instructions we take image and create a new container out of it  and take a snapshot as a new image
+
+29. How to add a Tag to an image ? 
+> dickerId / ProjectName : version
+ex. -t timmanas/redis:latest 
+docker build -t timmanas/redis:latest .
+
+30. How to execute a tagged docker image ?
+docker run timmanas/redis
+** if you don't put ":latest" - it will use latest image
