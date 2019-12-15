@@ -1,0 +1,645 @@
+Notes
+
+1. Go to "start.spring.io" to initialize String application
+2. When you download the filese you will see a mvnw file. This is the maven wrapper.
+This means we can execute maven  commands without having to install maven directly
+3. To run maven file, we can use ./mvnw spring-boot:run
+However make sure you have mvn wrapper installed
+
+4. JPA - Java Persistence API
+- Official api for working with relational data in java
+- Only a specification and not concrete implementation
+- One API will support many relational databases 
+5. What does JPA do ?
+- Acts a bridge between Java object world to how data is stored in relational databases
+
+6. ORM - Object relational mapping
+
+7. JPA = Hibernate DB. Some of which are supported are:
+Oracle
+DB2
+SQL Server
+mySQL
+Sybase 
+PostgresSQL
+H2 ...
+
+8. javax.persistence is the default JPA. Do not use the hibernate version
+
+9. To log on connect this on your browser
+http://localhost:8080/h2-console/
+username: jdbc:h2:mem:testdb
+password: n/a
+
+10. Spring Data Repositories 
+- Provides an implmentation of the repository pattern
+- A repository has methods for CRUD Operations and allows interchangeability of implementations
+ex. going from SQL to mySQL	
+
+11. Spring Data JPA is subset of Spring data projects
+- Uses hibernate for persistence to supported RDBA
+- Extends Java repository interface
+- Spring Data JPA provides implementation at RunTime
+- No SQL Required
+- At runtime, the code is injected and will handle all the heavy lifting
+- All you need to do is write the interface  
+ex.
+public interface BookRepository extends CrudRepository<Book, Long> {
+}
+
+- This has complete CRUD functionality !!!!! 
+
+12. Spring Controllers
+- Annotate controller class with @Constroller
+- This will register the class as a Spring bean and as a controller in Spring MVC
+- To map methods t	o http request path use @RequestMapping 
+
+13. What are templates ?
+- Dynamic technology used to generate HTML 
+Ex. Pulling stuff from DB and push to Webpage 
+
+
+14. What is ThymeLeaf ?
+- It is a Java template engine
+- Natural templating engine which allows user to view templates in browser 
+- Good alternative to JSP because JSP suck =) 
+
+
+15. Spring Pet Clinic is just a reference application for creating Spring application
+- it showcases how to build simple, but powerful DB oriented applications
+
+16. Spring PetClinic
+- Demonstrates the use of Spring core functionality:
+- Javabeans based application configuration using IOC (Inversion of control)
+- MVC Web presentation layer
+- Practical DB Access through JDBC, Java persistence API (JPA), Spring Data  JPA
+- Application monitoring using JMX
+- Declarative transaction management using AOP
+
+17. How to create new Spring project
+1. Create GitHub repo
+2. Go to Intellij
+- File > New Project > Spring Initalizer 
+- Initialize Service URL: https://start.spring.io
+- Select dependencies
+- Selet project name
+- Finish =)
+
+
+18. Spring Framework supports dependency injection and IOC (Inversion of Control)
+
+19. Dependency injection - 
+To put it simply:
+Inserting argument Objects (aka is variables) into the constructor instead of the Object instantiating and creating them
+
+20. Official DI Definition
+- is where a needed dependency is injected by another object
+- Class being injected  has NO responsibility in creating the object being injected
+ 
+21. Types of Dependency Injection
+- By class properties (Least preferred)
+- By Setters - Area of much debate
+- By Constructor (Most preferred)
+
+22. Concrete classes vs Interface
+- DI can be done with ConClass or with Interfaces
+- DI can be done with CC but should be avoided
+- DI via interfaces is highly preferred
+why ? 
+Allows runtime to decide implementation to inject
+Follows Interface segregation principle of SOLID
+Makes code testable
+
+23. Inversion of Control (IOC)
+- Technique to allow dependencies to be injected at runtime
+- Dependencies are NOT predetermined
+
+24. What is Spring Bean ? 
+A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container.
+
+25. what is the @Bean annotation ?
+- tells Spring that a method annotated with @Bean will return an object that should be registered as a bean in the Spring application context.
+
+26. Life cycle annotations
+@PostConstrut - will be called after the bean has been constructed but before returned to the requesting object
+@PreDestroy - will be called just before the bean is destroyed by the container
+
+
+27. add "xmlns:th="...", will allow you to add in a properties th
+ex. <h1 th:text=".....">Hello World</h1>
+
+28. Different types of configuration
+- XML Based Spring configuration
+- Annotation based configuration (ex. @Controller, @Service, @Component...)
+- Java Based configuration (ex. @Configuration, @Beans)
+- Groovy Bean definition configuration
+
+29. Spring Framework Sterotypes
+- Fixed image or set of characteristics which represent a type of thing
+- Used to define Spring beans in the spring contest
+- Ex (@Component, @Controller, @RestController, @Repository, @Service)
+
+30. Hierachy
+			@Component
+	@Controller 	@Repostory	#Service
+	@RestController
+30. @Controller - used to indicate a Spring MVC controller ...
+you used @requestmapping
+31. @Repository - accessing the data layer
+32. @Service - backing up a controller
+32. @RestContoller - Controller and response values
+
+33. Use @ComponentScan to scan for other Spring beans in other projects
+
+34. Its best practice to have one class to set up for configuration so that all the configurations are not spread out in multiple classes
+
+
+35. Each version of Spring Boot is configured to work with a specific version of Spring Framework
+
+36. Overriding the Spring Framework version NOT recommended
+
+37. What is Spring Boot ? 
+**** It is an OPINIONATED instance of Spring application
+- Open sourced Java based configuration to create microservices
+- Use various components of Spring but has additional abilities to package your application as a runnable jar which includes an embedded tomcat server
+- Reduces the need to write lots of configuration and boilerplate code
+- Easy to create standalone applications with embedded Tomcat server
+
+38. Spring boot annotations
+@SpringBootApplication - main annotation
+includes:
+@Configurawtion - Declares class as Spring configuration
+@EnableAutoConfiguration - Enables auto configuration
+@ComponentScan - scans for components in current package and all child packacges
+
+39. Spring Bean Scope
+- Singleton(default) - Only one instance of the bean is created in the IOC container
+- Prototype - New instance is created each time the bean is requested
+- Request - A single instance per HTTP request. Only valid in the context of web Spring ApplicationContext
+- Session - A single instance per http session. Only valid in context of web Spring APplicationContext
+- Application - bean is scooped to the lifecycle of a ServletContext. Only valid in the context of web 
+- Websocket - Scopes a single bean definition to the lifecycle of a websocket
+
+40. What annotation does @ComponentScan look for ?
+@Controller, @Service, @Component, @Repository
+
+41. What annotation do you use to declare a Java class is for spring configuration ?
+@Configuration
+
+42. What annotation do you use to declare a spring component inside a java configuration class ?
+@Bean 
+
+43. What annotation can be used to access the spring bean lifecycle ?
+@Postconstruct
+@predestroy
+
+44. All spring Sterotypes inherit from @Component
+
+45. What is a Spring boot starter ?
+- POM which declares a common set of dependencies
+
+46. @Repository  will detect platform specific persistence exceptions and rethrow them as Spring exceptions
+
+47. The application.properties file is the default spring application file which is already autorewire for fetching application settings
+
+48. What is YAML ?
+- Stands for "Yet Another Markup Language"
+- More suited to describing data structures 
+- Spacing is very very important.. Having spacing off will cause headaches
+
+49. Spring will pull properties from both "application.properties" and "application.yml" file, even if both exists
+
+50. ThymeLeaf
+- it is  a Java templating Engine
+- Template Engine of choice in the Spring community
+- Replacement for JSP (Java Server Pages)
+- It is not tied to web environment (can be used for producing HTML)
+- NOT a web framework
+- One purpose in life: Take a template and convert it to HTML. Thats it
+- Produces XML, XHTML and HTML5
+
+51. ThymeLeaf vs JSP
+- Thymeleaf are valid HTML documents 
+- JSP are not valid HTML, hence look terrible in browser
+- Thyme leaf allows for rapid application development without the need to run a container to parse the template (i.e You don't have to have Tomcat constantly restart every time we make a change ...just refresh)
+
+
+52. HTTP Status Code
+100 - informational in nature
+200 - successful request
+300 - redirections
+400 - client errors
+500 - server side errors
+
+53l Axios TCP is like Wireshark
+- Monitors network traffic
+- Download via plugin on IntelliJ
+
+54. Spring Developer Tools
+- Added to project via artifact 'spring-boot-devtools'
+- Gives us Automatic Restart
+	-> Trigger restart when Spring context changes 
+
+
+55. Types of JPA Relationships
+1. @OneToOne - One Entity is related to another entity
+2. @OneToMany - One entity is related to many entities  (ex. List, Set, Map, SortedSet, SortedMap)
+3. @ManyToOne -  Inverse relationship of OnetoMany
+4. @ManyToMany - Many entities are related to many entities
+Each entity has a list or set reference to others (ex. List of List)
+
+56. What is Hibernate ? 
+- Java framework that provides object-relational mapping to an object
+oriented model to the relational database
+- Provides abstraction layer which allows developers not worry about implementation
+- Will internally do CRUD operations without having to define them
+- Mostly user for DB CRUD operations
+
+57. Difference between Spring and Hibernate ?
+- Spring open source application framework used for developing applications 
+- Hibernate is a java framework which provides object-relational mapping
+
+
+58. Owning Side
+- The owning side in the relationship will hold the foreign key in the database
+Ex: OneToOne is the side where the foreign key is specified
+OneToMany and ManyToOne is the "Many" side
+- 'mappedBy' is used to define the field which "owns" the reference of the relationship
+
+55. Fetch Type
+- Lazy Fetch Type - Data is not queried until referenced
+- Eager Fetch Type - Data is queried up front
+
+56. JPA Fetch type defaults:
+1-M: Lazy
+M-1: Eager
+M-M: Lazy
+1-1: Eager
+
+57. JPA Cascades Types
+- JPA Cascade types control how state changes are cascaded from parent objects to child objects
+Types are:
+PERSIST - Save operations will cascade to related entities
+MERGE - related entities are merged when the owning entity is merged
+REFRESH - related entities are refreshed when the owning entity is refreshed
+REMOVE - remove all related entities when the owning entity is deleted
+DETACH - detaches all related entities if a manual detach occurs
+ALL - Applies all above cascade options 
+
+By default - no operations are cascaded
+
+58. Inheritance
+- MappedSuperclass - Entities inherit from super class. A DB table is not created for the super class
+- Single Table (Hibernate default) - One table is used for all subclasses
+- Joined Table - Base class and subclass have their own tables. Fetching subclass entities require a join to the parent table
+- Table per class - Each subclass has its own table
+
+
+
+59. What is H2 ?
+- H2 is a Java SQL database.
+- Very fast and open sourced
+- Uses JDBC API
+- Lightweight and uses browser based console application
+
+60. What is DDL ?
+- Data Definition Language
+
+61. What is DML ?
+- Data Manipulation Language
+
+62. Spring Boot will use create-drop for embedded databases (h2, sql, derby) or none
+
+63. Hibernate property is set by the Spring property "spring.jpa.hibernate.ddl-auto"
+Options are: none, validate, create, create-drop
+
+64. Use the Spring boot can initialize the database  
+
+65. what is the difference between unidirectional vs bidirectional ?
+- unidirectional mapping is done one-way - one side will not know about the other
+- bidirectional will know about both sides will not about the relationship
+
+66. Bidirectional is Recommended
+
+67. What do cascade types do ?
+- Cascade types controls how changes are cascaded from parent to child objects
+
+68. What is Project Lombok ? 
+- Simplified annotations like getters, setters, loggers
+- Makes life easier
+- Hooks in via annotations processor API -> IntelliJ will decompile to show you the source code
+
+69. PLomb syntax examples
+val - local variable declared final
+var - mutable local variables
+@NonNull - null check, will throw NPE if parameter is null
+@Cleanup - will call close() on resource on finally block (used for closing connections)
+@Getter - Creates getter method for all properties
+@Setters - Creates setter for all non-final properties
+@ToString - Generates String of class name, and each field separated by commas
+@NoArgsConstructor - Generates a no argument constructor
+@RequiredArgsConstructr - Generates a constructor for all fields 
+@Data - Generates typical boilerplate code for POJOs
+@Synchronized - synchronizes ? 
+@Log - Creates java loggers
+@Slf4j - Creates a SLF4J Logger (Recommended)
+
+
+70. Use @Data to convert POJO to simplify class
+- Use Demlombok on Refactor -> Demlombok -> Data to uncompile everything 
+
+71. What are Web Jars ? 
+- client side web libraries 
+
+72. Use web jars to add bootstrap and jquery functionality to your template
+
+73. When debugging - Make sure to look somewhere in the middle of the error logs on the browser. It will tell you what to look for and what caused the error
+
+74. How is data binding in spring ? 
+- Command objects (aka Backing beans)
+	> Used to transfer data to and from web forms
+- Spring will automatically bind data of form posts
+- Binding done by property name 
+
+75. the  * in "*{}" is read a property of the object (ex. recipeform.html)
+
+76. @ResponseStatus 
+- Allows you to annotate custom exception classes to indicate to the framework the HTTP status you want returned when exception occurs
+
+77. @ExceptionHandler - works at the controller level
+- allows to define custom deception handling
+- can be used with @ResponseStatus for just returning a http request
+- Can be used to return a specific view
+- Can also take control and work with model and view
+
+78. Which exception to use when ?
+- If just setting HTTP status - use @ResponseStatus
+- If redirection - use SimpleMappingExceptionResolver
+- If both, consider @ExceptionHandler on the controller
+
+79. What is internalization ?
+- i18n 
+- Localization is L10N
+- Fairly broad topic
+
+80. What is Docker ?
+- A standard for Linux Containers
+
+81. What is Container ? 
+- An isolated runtime inside of Linux
+- provides a private machine space in Linux
+- Will run on any modern Linux Kernels
+- Have their own processes space
+- Have their own network interface
+- 'Run' processes as root
+- Have their own disk space
+- Containers are NOT Vms. Containers share the same OS
+
+82.Terminology
+Docker Image 
+- Represents a Docker Container
+- Kind of a JAR or WAR file in java
+
+Docker Container
+- Standard runtime of Docker
+- A deployed and running Docker image
+- Like a spring boot executable
+
+Docker Engine
+- Code which manages Docker Stuff
+- Creates and run Docker Containers
+
+83. Docker Enterprise Edition
+- Container as a Service platform subscription
+- Enterprise class support ...not like the wild west
+- Quaterly releases
+
+84. Docker Community Editions
+- Free Docker editions
+
+85. Docker works like maven where it bring the image to our machine locally
+
+86. What is docker hub ?
+- Kinda like maven central
+- Central respotory
+- it has lots of docker images and pull it to our local computer
+
+87. What is Kitematic ?
+- It is a GUI tool for running images from docker hub
+
+88. How to pull Mongo from docker hub ?
+- docker run mongo
+
+89. How to check is any process in docker is running ?
+-> docker ps -a
+
+90. By running this command
+ "docker run -p 27017:27017 -d mongo"
+- it exposes this port to other application which can connect to MongoDB 
+-> So now you can connect to MongoDB server without having to connect to a docker container 
+-> VERY USEFUL 
+
+91. Use this command "mvn spring-boot:run" to execute spring commands from command line 
+
+92. What is a Docker Image ? 
+- An image defines a Docker container 
+- Similar in concept to a snapshot of a VM
+- Or a class vs instance of  the class 
+- Images are immutable
+- Once built, the files making up an image do NOT change
+
+93. What are Image Layers ? 
+- image are built in layers
+- Each layer is an immutable file but is a collection of files and directories
+- Layers receive an ID, calculated via a SHA 256 hash of the layer content
+	-> Therefore, if a layer contents change, the SHA 256 hash changes as well
+
+94. Image Tag names ? They are the values of images are referred to by 'tag' names
+
+95. The IMAGE ID will be the same as the first characters in the SHA	256 
+Ex
+-> docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mongo               latest              965553e202a4        3 weeks ago         363MB
+
+-> docker images -q --no-trunc
+sha256:965553e202a44592bc26d8c076eafef996a6dfc0de5bb2c1cf1795cd3b3a7373
+
+96. Image Tag Names
+- The format of the full tag name is:
+[REGISTRYHOST/][USERNAME/]NAME[:TAG]
+- For Registry Host 'registry.hub.docker.com' is inferred
+- For ':TAG' - 'latest' is default and inferred
+Ex: "registry.hub.docker.com/mongo:latest'
+
+
+97. Port 5671 & 5672 are exposed ports which will be communicating with Rabbit MQ
+
+98. The Big 3three when dealing with Docker Containers
+- Environment Variables
+- Mapping ports
+- Mapping Storage
+
+99. How do you know which port is being exposed ?
+- Go to Hub.docker.dom
+- Search for your container
+- Click on version #
+- Scroll to the bottom to see what "EXPOSE" port it is referring too 
+
+100. Cleaning up after Docker
+- These files will grow and consume a lot of disk space
+- 3 Key areas of house keeping:
+1. Containers
+2. Images
+3. Volumes
+
+101. How to clean up containers ?
+- kill all Running Docker containers
+> docker kill $(docker ps -q)
+
+- Delete all Stopped Docker Containers
+> docker rm $(docker ps -a -q)
+
+102. How to clean up Images ?
+- Remove a Docker Image
+> docker rmi <image name>
+
+- Delete Untagged(dangling Images
+> docker rmi $(docker images -q -f dangling=true)
+
+- Delete All images
+> docker rmi $(docker images -q)
+
+103. How to clean up Volumes ? 
+- Once a volume is no longer associated with a container, it is considered 'dangling'
+- Remove all dangling volumes
+> docker volume rm $(docker volume ls -f dangling=true -q)
+
+*** -f is for filter
+-q is for quiet
+-d is for background ..
+
+104. Note: when a docker image starts up, it will give an image slice volume locally
+
+105. What is default tag ?
+'latest' if not selected
+
+106. How do you run a docker image ?
+docker run <image name>
+
+107. How do you see the console output of a docker container ?
+- docker logs <container name>
+
+108. What command is used to build a docker image ? 
+From the directory of the DockerFile run:
+docker build -t <tag name>
+
+109. How do you map a host port to a container port ? 
+-p <host port>:<container port>
+
+110. How do you specify an environment variable for a docker container ? 
+docker run -e MY_VAR=my_prop <image name>
+
+111. How do you shell into a running docker container ?
+- docker exec -it <container name> bash
+
+112. How do you share storage on a host system with a docker container ?
+docker run -v <host path>:<container path> <image name>
+
+113. How to install Centos in your machine locally ?
+> docker run -d lentos tail -f /dev/null
+
+114. how to shell into Lentos ? 
+< docker exec -it <container name> bash
+
+115. How to install java in Centos
+> yum install java
+
+116. How to build a docker file ?
+What you will need
+1. Docker file 
+ex. 
+FROM centos
+  
+RUN yum install -y java
+
+VOLUME /tmp
+ADD /spring-boot-web-0.0.1-SNAPSHOT.jar myapp.jar
+RUN sh -c 'touch /myapp.jar'
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/myapp.jar"]
+
+117. How to generate a jar file ?
+- Click on the package button on the Maven tab 
+
+2. Jar file
+ex. spring-boot-web-0.0.1-SNAPSHOT.jar
+
+Execute this command:
+- docker build -t spring-boot-docker .
+- docker run -d -p 8080:8080 spring-boot-docker
+- Wait a couple mins
+- Check logs are working
+- Check webpage =) 
+- Done
+
+118. Remember localhost is actually 127.0.0.1
+
+119. When connecting to mySQL we are actually on 127.0.0.1:3306
+
+
+
+120. do NOT USE mySQL root user ...MAJOR security risk
+
+
+121. Comparison between 
+RDMS vs MONGODB
+Database| Database
+Table	| Collection
+Row	| Document
+Column	| Field
+Table Join|Embedded Documents
+Primary Key | Primary Key
+Aggregation	| Aggregation Pipeline
+
+
+122. What is Reactive Programming ?
+- Responsive 
+> Responsds in a timely manner
+> Cornerstone of usability and utility
+> Problems can be detected quickly
+> Provide rapid and consistent response times
+> Consistent behaviour simplifies error handling
+
+123. If you are getting this error when you type "mongo":
+exception: connect failed
+-> The go to command line and type
+mongod 
+-> Start it up again
+** Always run mongod before running mongo
+
+124. You cannot run webMVC and Spring Webflux both concurrently. Either one or the other 
+
+125. Flux - is a list of objects in a publisher
+Mono - is just one object in a publisher ? 
+
+126. Restful web service
+- stands for Representational State transfer
+- Representation - Typically JSON or XML
+- State > Typically via HTTP
+
+127. URI - Uiniform Resource Identifier
+> Unique string identifying a resource
+
+128. URL - Uniform Resource Locator
+> A URL with network information ex: http://www.example.com
+ftp://....
+
+129. use jsonSchema2Pojo to convert Json into Java Objects
+
+130. Checkout swagger
+
+131. What is Mapstruct ?
+- It is a code generator for Java bean mapping
+- Helps reduce coding for type conversion
+
+132. Checkout this http://localhost:8080/swagger-ui.html#/ for swagger documentation

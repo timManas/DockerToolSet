@@ -260,3 +260,109 @@ docker system df
 55. To get the ps of docker compose...use
 docker-compose ps
 ** Needs to be run in a docker compose directory with a YAML file
+
+56. This is now the recommended way to generate an app with Create React App.
+
+Instead of this:
+
+npm install -g create-react-app
+
+create-react-app client
+
+Just do this:
+
+npx create-react-app client
+
+57. How to create a react app ?
+npx create-react-app frontend
+
+
+57. Node Stuff
+nom run start - Starts up a development server. Only for dev uese only
+npm run test - Runs tests associated with the project
+npm run build - Builds a production version of the application
+
+58. How to set up a production Flow with docker ?
+1. Create
+Dockerfile.dev -> Only for dev env
+Dockerfile -> For production env
+
+
+
+59. If multiple docker files include use -f "Specify which docker file"
+> docker build -f Dockerfile.dev .    ---- Don't forget the "."
+
+60. Remember running the docker build ... will create a Docker image =) Then from the image you can start a container using docker run 
+- However, you will to PORT over your port 3000 
+Ex docker run -p 3000:3000 951a83499a04
+
+61. 
+How to Execute 
+docker run -p 3000:3000 951a83499a04
+
+-p : Stands for port forward
+
+Notes
+1. You will need to have Dockerfile in code 
+2. You will need to run           
+docker build -f Dockerfile.dev .    
+3. You will need to run using 
+docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app 
+
+How to allow for dynamic loading when code changes instead of having to rebuild container
+- You will need to use docker volumes 
+
+
+62. What is a docker volume ?
+- It is  reference to a folder outside a container
+- Similar to mapping where to map ports to outside container
+- Volumes a have a reference to folders outside containers
+
+63. docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app
+
+64. The -v without the ":" is a bookmark on the node_modules folder which will NOT try to map into anything else 
+
+65. You can use docker compose to minimize the command when using docker volume ("-v")
+
+66. Docker compose can do the build and the run of the file when you execute
+> docker-compose up 
+
+
+67. How to execute the tests in docker file ?
+docker run -it 10123c900599 npm run test
+
+68. docker attach - Attaches the stdin, stdout and stereo of the container 
+
+69. Why do we need to use Nginx ?
+Tradiationally
+Client -> Container (WebServer -> Index.Html + main.js)
+
+However, when running npm run build:
+The WebServer is not gone, hence we need to replace the Webserver with something else 
+
+Enter....NGINX
+
+Now
+Client -> Container(NGINX -> index.Html + main.js)
+
+70. You can run multi step build process 
+Build Phase
+1. use node:alpine
+2. Copy package.json file
+3. Install dependencies
+4. Run nom run build
+
+Run Phase
+1. Use nginx
+2. Copy over results of npm run build
+3. Start nginx
+
+
+72. How to execute Production Build on Docker
+docker build .   # Notice how we don't have the -f flag since the production grade itself is just Dockerfile instead of Dockerfile.dev
+> docker build .
+> docker run -p 8080:80 40b774e6452e
+
+
+
+
