@@ -364,5 +364,171 @@ docker build .   # Notice how we don't have the -f flag since the production gra
 > docker run -p 8080:80 40b774e6452e
 
 
+73. Instructions for Prod Flow for Travis
+1. Tell travis we need a copy of docker running
+2. Build our image using Dockerfile.dev
+3. Tell travis how to run our test suite
+4. Tell travis how to deploy our code to AWS
 
+
+133.  What is Kubernetes ? 
+- System for running many different containers over multiple different machines (NOT just one machine)
+
+134. Why use Kubernetes ? 
+- When you need to run many different containers with different images
+
+135. Theres a big distinction between using Kubernetes in Dev vs Prod Env
+- Dev env > We use a program called "minikube"
+- Prod Env > We use Amazon Elastic Container services for Kubernetes (EKS)
+           > Google Cloud Kubernetes Engine
+
+136. What is a MiniKube ? 
+- Used for managing the VM Itself
+- Local Env Only
+-  Will create a Kubernetes Cluster on local machine 
+	-> It will create a VM which will run a # containers
+
+137. What is KubeCtl ? 
+- Used for managing containers in a node 
+- Prod and Dev Env compatible
+
+138. How to install Kubernetes into local machine ?
+1. Install KubeCtl - CLI  for interacting with our master
+2. Install a VM driver virtual box - Used to make a VM that will be single node
+3. Install miniKube - Runs a single Node on VM
+
+
+How to install Kubernetes ?
+- Make sure brew is installed
+> Download brew @ brew.sh
+
+> brew install kubectl
+> Download Virtualbox @ virtualbox.org
+> break install minikube
+> minikube start 
+
+139. How to start Minikube ?
+> minikube start
+
+140. Docker Compose 	vs Kubernetes
+DC- Each entry can optionally get docker compose to build an image
+K - Expects all images to already be built
+
+DC - Each Entry represents a container we want to create
+K - One config file per object we want to create
+
+DC - Each entry defines the networking requirements (ports)
+K - We have to manually set up all networking
+
+141. How to get the simple container running on local kubernetes cluster running ?
+1. Make sure image is hosted on docker hub
+2. Make one config file to create the container
+3. Make one config file to set up networking	
+
+142. What is a object in Kubernetes ?
+- Config files is used to create 'objects'
+- Objects serve different purposes
+ex. Running a container, monitoring a container, setting up networking, etc
+
+143. Examples of Object Types ?
+- StatefulSet
+- ReplicateContainer
+- Pod
+- Service
+
+74. Why do we need to make a Pod ? 
+- To group containers with very similar purpose 
+- Must be deployed together and run together
+- Tightly coupled
+
+75. In kubernetes - you cannot create single containers by themselves. You would need to create pods which is a collection of containers 
+- Want a container ? Create a pod first
+
+76. Why do we need to make a service ? 
+- Sets up networking in Kubernetes Cluster
+
+77. What are different types of Services ?
+1. ClusterIP
+2. NodePort	-> Exposes a contiainer to the outside world (only for Dev purposes)
+3. LoadBalancer
+4. Ingress 
+
+
+78. Flow when a request comes in 
+1. User sends request > Kube Proxy > Service NodePort -> Pod[port:3000 -> Multi-Client container]
+
+79. How to feed a config file too KubeCtl ?
+> kubectl apply -f <filename>
+
+80. How to print the status of all running pods 
+> kubectl get pods
+
+
+81. How to print the status of all running services 
+> kubectl get services
+
+82. How to get Minikube ip address ?
+- minikube ip
+
+83. NOTE !!! YOU WILL NOT BE ABLE TO USER LOCAL HOST FOR KUBERNETES
+- YOU WILL NEED TO USE THE MINIKUBE ADDRESS : NodePort
+
+
+85. Takeaways from Kubernetes
+- KBN is a system to deploy containerized apps
+- Nodes are inidivual machines (VMS) that run containers
+- Masters are machines (or Vm's) with a set if programs to manage nodes
+- KBN didn't build our images - it got them from somewhere else
+- KBN MASTER decided where to run each container - each node can run a similar set of containers 
+- To deploy something, we update the desired state of the master with a config file
+- Master works constantly to meet  your desired state
+
+86. Imperative Deployment
+- Do exactly these steps to arrive at this container setup
+
+87. Declarative 
+- This is what i want the container to look like
+
+88. Declarative is the standard =) but Kubernetes can do both
+
+89. How to get detailed info about an object inside a cluster ? 
+> kubectl describe <object type> <object name>
+
+90. What is a deployment object in Kibernetes ? 
+- Maintains a set of identical pods
+- Ensures they have correct config and the right # exists
+-  Similar in nature to a pod 
+
+91. We can run either Pods or deployment in Kubernetes to execute containers
+
+92. Pods vs Deployment
+Pods
+- Runs a single set of containers
+- Good for one-off dev purposes
+- Rarely used directly in production
+
+Deployment
+- Runs a set of identical pods
+- Monitors the state of each pod, updating as necessary
+- Good for dev
+- Good for production 
+
+93. How to remove a Kubernetes object ? 
+> kubectl delete -f <config file >
+
+94. Pulling a new version of an image is a PIA when triggering updates
+Solutions:
+1. Manually delete pods to get the deployment to recreate them with latest version  (Deleting pods manually is silly)
+2. Tag built images with real version # and specify that version in the config file (Adds an extra step in production deployment process)
+
+
+95. How to configure the VM to use your docker server ? 
+eval $(minikube docker-env)
+*** This only configured your current terminal window
+*** Temporary solutions only
+
+96. Why mess with Docker in the node ? 
+- Uses all the same debugging techniques we learned with Docker CLI
+- Manually kills containers to test kubernetes ability to self-help
+- Delete cached images in the node
 
